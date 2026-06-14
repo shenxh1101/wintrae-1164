@@ -1,0 +1,25 @@
+{
+  "terminology": {
+    "服务器": "服务端",
+    "客户端程序": "客户端",
+    "用户界面": "用户界面"
+  },
+  "forbidden_words": [
+    "绝对不行",
+    "肯定会",
+    "TODO"
+  ],
+  "name_aliases": {
+    "张三": ["张三丰", "小张"],
+    "北京": ["北平"],
+    "上海": ["沪上"]
+  },
+  "date_patterns": ["YYYY-MM-DD"],
+  "number_style": "halfwidth",
+  "heading_levels": {
+    "概述": 1,
+    "安装": 2,
+    "配置": 2,
+    "使用方法": 2
+  }
+}
