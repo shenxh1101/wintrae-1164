@@ -256,7 +256,11 @@ class Checker:
     @staticmethod
     def _check_missing_chapters(files: list[str], root: str | Path) -> list[Issue]:
         issues: list[Issue] = []
-        group_titles: dict[str, set[str]] = {}
+        if not files:
+            return issues
+
+        file_titles: dict[str, set[str]] = {}
+        group = Path(files[0]).stem
         for f in files:
             path = Path(root) / f
             try:
@@ -264,21 +268,20 @@ class Checker:
             except (OSError, UnicodeDecodeError):
                 continue
             headings = {m.group(2).strip() for m in _HEADING_RE.finditer(text)}
-            group = Path(f).stem.rsplit("_", 1)[0] if "_" in Path(f).stem else Path(f).stem
-            group_titles.setdefault(group, set()).update(headings)
+            file_titles[f] = headings
 
         all_titles: set[str] = set()
-        for titles in group_titles.values():
+        for titles in file_titles.values():
             all_titles.update(titles)
 
-        for group, titles in group_titles.items():
+        for f, titles in file_titles.items():
             missing = all_titles - titles
             for title in sorted(missing):
                 issues.append(
                     Issue(
                         kind=IssueKind.MISSING_CHAPTER,
                         severity=Severity.WARNING,
-                        file=group,
+                        file=f,
                         line=0,
                         message=f"缺失章节：「{title}」",
                         original="",

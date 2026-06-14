@@ -42,7 +42,7 @@ def scan(directory: str, pattern: str, ignore_files: tuple[str, ...]) -> None:
             click.echo(f"    - {f}")
 
 
-@main.command()
+@main.command("compare")
 @click.argument("directory", type=click.Path(exists=True, file_okay=False))
 @click.option("-r", "--rules", "rules_file", type=click.Path(exists=True), help="规则文件路径（JSON/YAML）")
 @click.option("-p", "--pattern", default="*.md", help="文件名匹配模式")
